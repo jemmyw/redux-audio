@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 import Audio from './Audio'
-import { audioEnded, audioRegister, audioPaused, audioPlaying, audioUnregister, audioCommandComplete } from './actions'
+import { audioEnded, audioRegister, audioPaused, audioPlaying, audioUnregister, audioCommandComplete, audioSrc } from './actions'
 
 const mapStateToProps = (state, ownProps) => {
   const stateObj = state.audio.get(ownProps.uniqueId)
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onMount: () => {
       dispatch(audioRegister(ownProps.uniqueId))
+      if (ownProps.src) {
+        dispatch(audioSrc(ownProps.uniqueId, ownProps.src))
+      }
     },
     onPause: () => {
       dispatch(audioPaused(ownProps.uniqueId))
