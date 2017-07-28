@@ -1,25 +1,26 @@
 'use strict'
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 
-const Audio = React.createClass({
+class Audio extends React.Component {
   play () {
     ReactDOM.findDOMNode(this).play()
-  },
+  }
 
   pause () {
     ReactDOM.findDOMNode(this).pause()
-  },
+  }
 
   skip (time) {
     const el = ReactDOM.findDOMNode(this)
     el.currentTime = el.currentTime + time
-  },
+  }
 
   seek (time) {
     ReactDOM.findDOMNode(this).currentTime = time
-  },
+  }
 
   getDefaultProps () {
     return {
@@ -28,11 +29,11 @@ const Audio = React.createClass({
       loop: false,
       preload: 'metadata'
     }
-  },
+  }
 
   componentWillMount () {
     this.props.onMount()
-  },
+  }
 
   componentDidMount () {
     const audio = ReactDOM.findDOMNode(this)
@@ -40,7 +41,7 @@ const Audio = React.createClass({
     audio.addEventListener('ended', onEnded)
     audio.addEventListener('pause', onPause)
     audio.addEventListener('playing', onPlaying)
-  },
+  }
 
   componentWillUnmount () {
     const audio = ReactDOM.findDOMNode(this)
@@ -49,7 +50,7 @@ const Audio = React.createClass({
     audio.removeEventListener('pause', onPause)
     audio.removeEventListener('playing', onPlaying)
     onUnmount()
-  },
+  }
 
   componentDidUpdate (prevProps) {
     const command = this.props.command
@@ -58,7 +59,7 @@ const Audio = React.createClass({
       this[command.command](...command.args || [])
       this.props.onCommandComplete(command.command)
     }
-  },
+  }
 
   render () {
     const { autoPlay, controls, loop, preload, src } = this.props
@@ -72,9 +73,9 @@ const Audio = React.createClass({
         src={src}
       />
     )
-  },
+  }
 
-  propTypes: {
+  static propTypes = {
     autoPlay: PropTypes.bool,
     command: PropTypes.oneOfType([
       PropTypes.oneOf(['none']),
@@ -95,6 +96,6 @@ const Audio = React.createClass({
     src: PropTypes.string.isRequired,
     uniqueId: PropTypes.string.isRequired
   }
-})
+}
 
 export default Audio
