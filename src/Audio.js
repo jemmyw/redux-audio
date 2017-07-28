@@ -5,6 +5,13 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 
 class Audio extends React.Component {
+  static defaultProps = {
+    autoPlay: false,
+    controls: false,
+    loop: false,
+    preload: 'metadata'
+  }
+
   play () {
     ReactDOM.findDOMNode(this).play()
   }
@@ -20,15 +27,6 @@ class Audio extends React.Component {
 
   seek (time) {
     ReactDOM.findDOMNode(this).currentTime = time
-  }
-
-  getDefaultProps () {
-    return {
-      autoPlay: false,
-      controls: false,
-      loop: false,
-      preload: 'metadata'
-    }
   }
 
   componentWillMount () {
